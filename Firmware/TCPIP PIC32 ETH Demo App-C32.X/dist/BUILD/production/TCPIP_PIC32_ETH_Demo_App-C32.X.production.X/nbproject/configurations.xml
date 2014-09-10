@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="LoadableFiles"
+                   displayName="Prebuilt Files"
+                   projectFiles="true">
+      <itemPath>/home/celentan/MPLABXProjects/CAN to Ethernet Bridge/CAN to Ethernet Demo/TCPIP PIC32 CAN TO ETH Demo App/TCPIP PIC32 ETH Demo App-C32.X/dist/BUILD/production/TCPIP_PIC32_ETH_Demo_App-C32.X.production.hex</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="default" type="4">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <targetDevice>PIC32MX795F512L</targetDevice>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool>SKDEPIC32PlatformTool</platformTool>
+        <languageToolchain></languageToolchain>
+        <languageToolchainVersion></languageToolchainVersion>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <loading>
+          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <alternateLoadableFile></alternateLoadableFile>
+        </loading>
+      </compileType>
+      <makeCustomizationType>
+        <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
+        <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
+        <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
+      </makeCustomizationType>
+      <SKDEPIC32PlatformTool>
+      </SKDEPIC32PlatformTool>
+    </conf>
+  </confs>
+</configurationDescriptor>
