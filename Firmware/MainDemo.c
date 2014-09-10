@@ -739,7 +739,7 @@ static void Decode(int length,char* str,LedMonitor* MyLedMonitor){
                 else{
                     //TODO: ERROR HERE
                 }    
-            }//end AMPLITUDE_ALL
+            }//end AMPLITUDE_ALL aa
             else if (strcmp(token[1],"WIDTH")==0){
                 if (Nwords==4){
                     ch=atoi(token[2]);
