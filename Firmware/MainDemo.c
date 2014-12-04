@@ -965,22 +965,32 @@ static void Decode(int length,char* str,LedMonitor* MyLedMonitor){
             if (MyLedMonitor->status==FALSE) strcpy(str,"SYSTEM IS OFF\n");
             else if (!MyLedMonitor->MySequence.isOn) strcpy(str,"SEQUENCE IS NOT RUNNING\n");
             else {
-                /*Also turn off the LEDs*/
-                for (ii=0;ii<MyLedMonitor->MySequence.NledsThisStep[MyLedMonitor->MySequence.curStep];ii++){
+               /*Also turn off the LEDs*/
+              for (ii=0;ii<MyLedMonitor->MySequence.NledsThisStep[MyLedMonitor->MySequence.curStep];ii++){
                     id=MyLedMonitor->MySequence.IDledsThisStep[MyLedMonitor->MySequence.curStep][ii];
                     if (MyLedMonitor->MySequence.isMultiDC==TRUE) {
                          turn_on_off(id+0*DFLT_CH_PER_BOARD/4,id+1*DFLT_CH_PER_BOARD/4,id+2*DFLT_CH_PER_BOARD/4,id+3*DFLT_CH_PER_BOARD/4,0,MyLedMonitor->color,0,0);
                     }
                     else {
-                            turn_on_off(id,BLANK_CH,BLANK_CH,BLANK_CH,0,MyLedMonitor->color,0,0);
+                         turn_on_off(id,BLANK_CH,BLANK_CH,BLANK_CH,0,MyLedMonitor->color,0,0);
                         }
                     }
-
                 if (MyLedMonitor->MySequence.isMultiDC==TRUE)   memcpy(&(MyLedMonitor->MySequence),&(MyLedMonitor->BackupSequence),sizeof(MyLedMonitor->MySequence));
 
                 MyLedMonitor->MySequence.isOn=FALSE;
                 MyLedMonitor->MySequence.curStep=-1;
                 MyLedMonitor->MySequence.curRepetition=0;
+
+                /*  This part should be redundant*/
+                for (ii=0;ii<DFLT_NMBR_OF_BOARDS;ii++){
+                 if (hasBoardOneLEDOn(ii,MyLedMonitor)){
+                        id=getBoardLEDOn(ii,MyLedMonitor);
+                        id=id+ii*DFLT_CH_PER_BOARD;
+                        turn_on_off(id,BLANK_CH,BLANK_CH,BLANK_CH,FALSE,MyLedMonitor->color,0,0);
+                }
+                MyLedMonitor->LedStatus_low[ii]=0x0;
+                MyLedMonitor->LedStatus_high[ii]=0x0;
+               }
             }
         }//end "STOP SEQUENCE"
         else if (strcmp(token[0],"SWITCH")==0) {

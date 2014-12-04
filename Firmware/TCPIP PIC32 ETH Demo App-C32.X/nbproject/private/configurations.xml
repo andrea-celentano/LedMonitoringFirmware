@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="62">
   <projectmakefile>Makefile</projectmakefile>
-  <defaultConf>1</defaultConf>
+  <defaultConf>2</defaultConf>
   <confs>
     <conf name="DEBUG" type="2">
       <platformToolSN>:=MPLABCommUSB:=04D8:=00E0:=0000:=Microchip Technology Inc.:=Microchip Custom USB Device:=BUR124090065:=x:=en</platformToolSN>
