@@ -1206,7 +1206,7 @@ static void ProcessI2C(LedMonitor *MyLedMonitor)
 
     static DWORD t2=0; /*static means: t2=0 only at first*/
     DWORD dt;
-    int ii,id,bd;
+    int ii,jj,id,bd;
     int max_step;
     short amplitude;
     if (MyLedMonitor->statusChanged){ //the status of the system has changed, ON/OFF -> OFF/ON
@@ -1229,13 +1229,12 @@ static void ProcessI2C(LedMonitor *MyLedMonitor)
         dt*=2*TICK_SECOND/2ul;
 
         if (MyLedMonitor->MySequence.curStep==-1) { /*First step*/
-        /*  Turn OFF all the LEDs*/
+            /*  Turn OFF all the LEDs*/
             for (ii=0;ii<DFLT_NMBR_OF_BOARDS;ii++){
-                if (hasBoardOneLEDOn(ii,MyLedMonitor)){
-                    id=getBoardLEDOn(ii,MyLedMonitor);
-                    id=id+ii*DFLT_CH_PER_BOARD;
+                for (jj=0;jj<DFLT_CH_PER_BOARD;jj++){
+                    id=jj+ii*DFLT_CH_PER_BOARD;
                     turn_on_off(id,BLANK_CH,BLANK_CH,BLANK_CH,FALSE,MyLedMonitor->color,0,0);
-                    }
+                }
                 MyLedMonitor->LedStatus_low[ii]=0x0;
                 MyLedMonitor->LedStatus_high[ii]=0x0;
             }
@@ -1324,9 +1323,19 @@ static void ProcessI2C(LedMonitor *MyLedMonitor)
                      MyLedMonitor->LedStatus_low[ii]=0x0;
                      MyLedMonitor->LedStatus_high[ii]=0x0;
                  }
-
                  //TEMPORARY WORK AROUND DUE TO I2C BUS CONFLICT:
                  sel_clk(MyLedMonitor->FT_clk_src,MyLedMonitor->FT_int_frequency);
+                 //TODO: turn-off clock?
+                 #ifdef HPS
+                    MyLedMonitor->status=FALSE;
+                    MyLedMonitor->statusChanged=TRUE;
+                     /*In this case, also clean the LED bits, all boards*/
+                    for (ii=0;ii<DFLT_NMBR_OF_BOARDS;ii++){
+                       MyLedMonitor->LedStatus_low[ii]=0x00000000;
+                       MyLedMonitor->LedStatus_high[ii]=0x00000000;
+                    }
+                  turn_system_on_off(FALSE);
+                 #endif
                 }
              }
     }//end sequence_is_on

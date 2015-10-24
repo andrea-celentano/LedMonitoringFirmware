@@ -35,8 +35,13 @@ extern "C" {
 
 #define DFLT_WIDTH 3000
 #define DFLT_AMPL 1000
+
 #define DC_WIDTH 1000
 
+/*in seconds. There are 14 steps in a DC sequence. If we change every 5 minutes, it will take 1h10 minutes for
+  a complete iteration. That's ok*/
+#define DFLT_TIME_DC_SEQUENCE 300
+    
 #define SEQ_MAX_STEPS DFLT_NMBR_OF_CH
 
     typedef enum clk_src{

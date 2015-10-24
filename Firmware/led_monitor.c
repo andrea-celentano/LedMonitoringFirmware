@@ -614,7 +614,7 @@ int InitLEDSequence(LedSequence *MySequence,BOOL MultiDC){
         MySequence->Nsteps=DFLT_CH_PER_BOARD/4;
         MySequence->Nrepetitions=-1; /*Infinite loop, turn it off with stop_sequence*/
          for (ii=0;ii<DFLT_CH_PER_BOARD/4;ii++){
-             MySequence->TimeThisStep[ii]=1;
+             MySequence->TimeThisStep[ii]=DFLT_TIME_DC_SEQUENCE;
              MySequence->NledsThisStep[ii]=DFLT_NMBR_OF_BOARDS;
              for (jj=0;jj<DFLT_NMBR_OF_BOARDS;jj++){
                 MySequence->IDledsThisStep[ii][jj]=ii+jj*DFLT_CH_PER_BOARD;
