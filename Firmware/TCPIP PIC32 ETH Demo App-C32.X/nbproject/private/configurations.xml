@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="62">
   <projectmakefile>Makefile</projectmakefile>
-  <defaultConf>2</defaultConf>
+  <defaultConf>1</defaultConf>
   <confs>
     <conf name="DEBUG" type="2">
       <platformToolSN>:=MPLABCommUSB:=04D8:=00E0:=0000:=Microchip Technology Inc.:=Microchip Custom USB Device:=BUR124090065:=x:=en</platformToolSN>
@@ -22,7 +22,7 @@
       </runprofile>
     </conf>
     <conf name="FT" type="2">
-      <platformToolSN>:=MPLABCommUSB:=04D8:=00E0:=0000:=Microchip Technology Inc.:=Microchip Custom USB Device:=BUR124090065:=x:=en</platformToolSN>
+      <platformToolSN></platformToolSN>
       <languageToolchainDir>/opt/microchip/mplabc32/v2.02/bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>
@@ -40,7 +40,7 @@
       </runprofile>
     </conf>
     <conf name="HPS" type="2">
-      <platformToolSN>:=MPLABComm-USB-Microchip:=&lt;vid>04D8:=&lt;pid>00E0:=&lt;rev>0000:=&lt;man>Microchip Technology Inc.:=&lt;prod>Microchip Custom USB Device:=&lt;sn>BUR133230384:=&lt;drv>x:=end</platformToolSN>
+      <platformToolSN></platformToolSN>
       <languageToolchainDir>/opt/microchip/mplabc32/v2.02/bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>

@@ -35,8 +35,12 @@ extern "C" {
 
 #define DFLT_WIDTH 3000
 #define DFLT_AMPL 1000
+#define AMPL_WORKAROUND 2000
 
 #define DC_WIDTH 1000
+
+
+
 
 /*in seconds. There are 14 steps in a DC sequence. If we change every 5 minutes, it will take 1h10 minutes for
   a complete iteration. That's ok*/

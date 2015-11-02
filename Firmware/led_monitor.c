@@ -335,6 +335,7 @@ int turn_on_off(int ch1,int ch2, int ch3,int ch4,BOOL turnOn,LED_color color, un
   int ret;
   int ii;
   int tmpCHmulti[4]; //used for the multi-case
+  int m_amplitudeSave=m_amplitude;
 
   BOOL fMulti=FALSE;
   /*I need to handle the different cases
@@ -439,7 +440,10 @@ int turn_on_off(int ch1,int ch2, int ch3,int ch4,BOOL turnOn,LED_color color, un
   //1: enable the I2C bus of the board we need to communicate to
   hub=(0x1)<<idBoard1;
   ret=I2CTransmitOneByteToAddress(hub,I2C_HUB);
-
+#if defined FT
+  m_amplitude=AMPL_WORKAROUND;
+  m_amplitudeSave=m_amplitude;
+#endif
   //2a: Amplitude
   cmd_dac[0]=DAC_LOAD_A|((m_amplitude>>8)&0x0f);
   cmd_dac[1]=m_amplitude&0xff;
@@ -457,6 +461,21 @@ int turn_on_off(int ch1,int ch2, int ch3,int ch4,BOOL turnOn,LED_color color, un
   //3a: PCA.
   if (!fMulti)  {
       ret=I2CTransmitMoreBytesToAddress(3,cmd_pca,I2C_PCA|((ipca<<1)&0xe));
+#ifdef FT
+  m_amplitude=m_amplitudeSave;
+  //4a: Amplitude
+  cmd_dac[0]=DAC_LOAD_A|((m_amplitude>>8)&0x0f);
+  cmd_dac[1]=m_amplitude&0xff;
+  ret=I2CTransmitMoreBytesToAddress(2,cmd_dac,I2C_DAC);
+  //4b: Width
+  cmd_dac[0]=DAC_LOAD_B|((m_width>>8)&0x0f);
+  cmd_dac[1]=m_width&0xff;
+  ret=I2CTransmitMoreBytesToAddress(2,cmd_dac,I2C_DAC);
+  //4c: Update
+  cmd_dac[0]=DAC_UPDATE_ALL;
+  ret=I2CTransmitOneByteToAddress(cmd_dac[0],I2C_DAC);
+#endif
+
 #ifdef HPS
       /*We need to make sure that the color is selected. The color is on the first PCA*/
       if (ipca>0) { //previous command did not activate the color
