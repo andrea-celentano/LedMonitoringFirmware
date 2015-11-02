@@ -568,7 +568,7 @@ static void Decode(int length,char* str,LedMonitor* MyLedMonitor){
     char cmd[MAIN_MAX_LENGTH];
     char **token;
     int Nwords=0;
-    int ii,ch,id,board,Itmp,Itmp2;
+    int ii,ch,id,board,Itmp,Itmp2,step;
     unsigned short uStmp,uStmp1,uStmp2;
     UINT32 uint32tmp;
     BOOL Btmp;
@@ -941,6 +941,7 @@ static void Decode(int length,char* str,LedMonitor* MyLedMonitor){
                     memcpy(&(MyLedMonitor->BackupSequence),&(MyLedMonitor->MySequence),sizeof(MyLedMonitor->MySequence));
                     InitLEDSequence(&(MyLedMonitor->MySequence),TRUE);
                     MyLedMonitor->MySequence.isOn=TRUE;
+                    MyLedMonitor->MySequence.isMultiDC=TRUE;
                     /*When we start a sequence, ALL the LEDs arrays must be set to 0*/
                     int qq;
                     for (qq=0;qq<DFLT_NMBR_OF_BOARDS;qq++){
@@ -959,6 +960,7 @@ static void Decode(int length,char* str,LedMonitor* MyLedMonitor){
                         MyLedMonitor->LedStatus_high[qq]=0x00000000;
                      }
                     MyLedMonitor->MySequence.isOn=TRUE;
+                    MyLedMonitor->MySequence.isMultiDC=FALSE; //This is a work-around to ensure the MultiDC mode is off!!
             }
         }//end "START SEQUENCE"
         else if (strcmp(token[0],"STOP_SEQUENCE")==0){
@@ -1150,14 +1152,21 @@ static void Decode(int length,char* str,LedMonitor* MyLedMonitor){
         else if (strcmp(token[1],"SEQUENCE")==0){
             if (MyLedMonitor->MySequence.isOn==FALSE) strcpy(str,"SEQUENCE OFF\n");
             else {
-                    int step=MyLedMonitor->MySequence.curStep;
-                    int ii;
+                    step=MyLedMonitor->MySequence.curStep;
                     sprintf(str,"SEQUENCE ON.\n Step%i Rep%i.\n N LEDs ON: %i\n",step,MyLedMonitor->MySequence.curRepetition,MyLedMonitor->MySequence.NledsThisStep[step]);
                     for (ii=0;ii<MyLedMonitor->MySequence.NledsThisStep[step];ii++){
                         sprintf(&str[strlen(str)],"LED %i: %i\n",ii,MyLedMonitor->MySequence.IDledsThisStep[step][ii]);
                     }
             }
         } //end "GET SEQUENCE"
+        else if (strcmp(token[1],"SEQUENCE_STEP")==0){
+                step=atoi(token[2]);
+                sprintf(str,"STEP %i \n Time-nLeds: %i %i\n. IDs:\n",step,MyLedMonitor->MySequence.TimeThisStep[step],MyLedMonitor->MySequence.NledsThisStep[step]);
+                for (ii=0;ii<MyLedMonitor->MySequence.NledsThisStep[step];ii++){
+                      sprintf(&str[strlen(str)],"%i ",MyLedMonitor->MySequence.IDledsThisStep[step][ii]);
+                }
+                sprintf(&str[strlen(str)],"\n");
+        }
         else if (strcmp(token[1],"LED_STATUS")==0) {
              if (Nwords==3){
                 ch=atoi(token[2]);
