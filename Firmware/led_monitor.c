@@ -441,8 +441,9 @@ int turn_on_off(int ch1,int ch2, int ch3,int ch4,BOOL turnOn,LED_color color, un
   hub=(0x1)<<idBoard1;
   ret=I2CTransmitOneByteToAddress(hub,I2C_HUB);
 #if defined FT
-  m_amplitude=AMPL_WORKAROUND;
   m_amplitudeSave=m_amplitude;
+  m_amplitude=AMPL_WORKAROUND;
+  
 #endif
   //2a: Amplitude
   cmd_dac[0]=DAC_LOAD_A|((m_amplitude>>8)&0x0f);
