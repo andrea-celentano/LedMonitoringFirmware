@@ -1333,8 +1333,7 @@ static void ProcessI2C(LedMonitor *MyLedMonitor)
                      MyLedMonitor->LedStatus_high[ii]=0x0;
                  }
                  //TEMPORARY WORK AROUND DUE TO I2C BUS CONFLICT:
-                 sel_clk(MyLedMonitor->FT_clk_src,MyLedMonitor->FT_int_frequency);
-                 //TODO: turn-off clock?
+                 sel_clk(MyLedMonitor->FT_clk_src,MyLedMonitor->FT_int_frequency);  
                  #ifdef HPS
                     MyLedMonitor->status=FALSE;
                     MyLedMonitor->statusChanged=TRUE;
@@ -1344,6 +1343,8 @@ static void ProcessI2C(LedMonitor *MyLedMonitor)
                        MyLedMonitor->LedStatus_high[ii]=0x00000000;
                     }
                   turn_system_on_off(FALSE);
+                 #else  //just for non-HPS.
+                      sel_clk(EXT_CLK,0);
                  #endif
                 }
              }
