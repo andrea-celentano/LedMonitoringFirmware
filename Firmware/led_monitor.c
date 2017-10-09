@@ -443,7 +443,6 @@ int turn_on_off(int ch1,int ch2, int ch3,int ch4,BOOL turnOn,LED_color color, un
 #if defined FT
   m_amplitudeSave=m_amplitude;
   m_amplitude=AMPL_WORKAROUND;
-  
 #endif
   //2a: Amplitude
   cmd_dac[0]=DAC_LOAD_A|((m_amplitude>>8)&0x0f);
