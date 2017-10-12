@@ -46,9 +46,13 @@ int LoadDefaultLedMonitor(LedMonitor *m_monitor){
     m_monitor->status=FALSE;
     //owr is OFF
     m_monitor->owr=FALSE;
-    //freq is 8 KHz, clock is EXT
+    //freq is 8 KHz  (HPS) - 62.5 Hz (FT), clock is EXT
     m_monitor->FT_clk_src=EXT_CLK;
+#ifdef HPS
     m_monitor->FT_int_frequency =F_8KHz;
+#else
+    m_monitor->FT_int_frequency =F_62Hz;
+#endif
     //all LEDS are OFF
     for (ii=0;ii<DFLT_NMBR_OF_BOARDS;ii++){
         m_monitor->LedStatus_low[ii]=0x00000000;
